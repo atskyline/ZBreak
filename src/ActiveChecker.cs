@@ -1,0 +1,73 @@
+﻿using System;
+using System.Diagnostics;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace ZBreak
+{
+    class ActiveChecker : IDisposable
+    {
+        private const int CollectPixelCount = 1000;
+        //两次采集的像素有超过一定百分比不同，则认为屏幕属于活动状态
+        private const double DecidePercent = 0.02;
+
+        private Pixel[] _data;
+        private Rectangle _resolution;
+        private Bitmap _bitmap;
+        public ActiveChecker()
+        {
+            _resolution = Screen.PrimaryScreen.Bounds;
+            _data = new Pixel[CollectPixelCount];
+            InitData();
+            _bitmap = new Bitmap(_resolution.Width, _resolution.Height);
+        }
+
+        private void InitData()
+        {
+            var random = new Random();
+            for (int i = 0; i < _data.Length; i++)
+            {
+                int randomX = random.Next(0, _resolution.Width);
+                int randomY = random.Next(0, _resolution.Height);
+                _data[i].X = randomX;
+                _data[i].Y = randomY;
+            }
+        }
+
+        /// <summary>
+        /// 截屏到_bitmap
+        /// </summary>
+        private void ScreenShot()
+        {
+            using (Graphics g = Graphics.FromImage(_bitmap))
+            {
+                g.CopyFromScreen(Point.Empty, Point.Empty, _resolution.Size);
+            }
+        }
+
+        /// <summary>
+        /// 根据之前和当前的截图状态，判断是否有大变化（即当前属于活动状态）
+        /// </summary>
+        public Boolean Check()
+        {
+            ScreenShot();
+            int changePixelCount = 0;
+            for (int i = 0; i < _data.Length; i++)
+            {
+                var newColor = _bitmap.GetPixel(_data[i].X, _data[i].Y);
+                if (newColor != _data[i].Color)
+                {
+                    changePixelCount++;
+                }
+                _data[i].Color = newColor;
+            }
+            Debug.WriteLine(((Double)changePixelCount / CollectPixelCount) * 100 + "%");
+            return ((Double)changePixelCount / CollectPixelCount) > DecidePercent;
+        }
+
+        public void Dispose()
+        {
+            _bitmap.Dispose();
+        }
+    }
+}
