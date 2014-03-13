@@ -11,7 +11,12 @@ namespace testBaseApi
     {
         static void Main(string[] args)
         {
+        }
 
+        private static void TestSystemSound()
+        {
+            System.Media.SystemSounds.Beep.Play();
+            Console.ReadLine();
         }
 
         private static void TestTakeShot()

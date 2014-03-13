@@ -28,6 +28,15 @@ namespace ZBreak
             this.WindowState = FormWindowState.Minimized;
         }
 
+        private void InitNotifyIconMenu()
+        {
+            var contextMenu = new ContextMenu();
+            var exitMenuItem = new MenuItem("退出程序");
+            exitMenuItem.Click += (o, e) => Application.Exit();
+            contextMenu.MenuItems.Add(exitMenuItem);
+            notifyIcon.ContextMenu = contextMenu;
+        }
+
         private void btnReset_Click(object sender, EventArgs e)
         {
             _lastBreakTime = DateTime.Now;
@@ -51,20 +60,17 @@ namespace ZBreak
             var activeTime = DateTime.Now - _lastBreakTime;
             if (activeTime > _remindSpan)
             {
-                this.label.Text = "您已连续"+ activeTime.Minutes +"分钟没有休息了～";
-                this.ShowInTaskbar = true;
-                this.WindowState = FormWindowState.Normal;
-                this.Show();
+                ShowRemind(activeTime);
             }
         }
 
-        private void InitNotifyIconMenu()
+        private void ShowRemind(TimeSpan activeTime)
         {
-            var contextMenu = new ContextMenu();
-            var exitMenuItem = new MenuItem("退出程序");
-            exitMenuItem.Click += (o, e) => Application.Exit();
-            contextMenu.MenuItems.Add(exitMenuItem);
-            notifyIcon.ContextMenu = contextMenu;
+            this.label.Text = "您已连续" + activeTime.Minutes + "分钟没有休息了～";
+            this.ShowInTaskbar = true;
+            this.WindowState = FormWindowState.Normal;
+            this.Show();
+            System.Media.SystemSounds.Beep.Play();
         }
 
     }
