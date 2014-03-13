@@ -39,10 +39,20 @@ namespace ZBreak
         /// </summary>
         private void ScreenShot()
         {
+
             using (Graphics g = Graphics.FromImage(_bitmap))
             {
-                g.CopyFromScreen(Point.Empty, Point.Empty, _resolution.Size);
+                try
+                {
+                    g.CopyFromScreen(Point.Empty, Point.Empty, _resolution.Size);
+                }
+                catch (Exception)
+                {
+                    //这里的try-catch主要是为了跳过在锁屏状态下，因为没有桌面（即没有桌面句柄）而调用失败的情况
+                    //锁屏状态下会引发System.ComponentModel.Win32Exception (0x80004005): The handle is invalid
+                }
             }
+
         }
 
         /// <summary>
