@@ -34,7 +34,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RemindForm));
             this.label = new System.Windows.Forms.Label();
-            this.btnReset = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
             this.btnMore = new System.Windows.Forms.Button();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.timer = new System.Windows.Forms.Timer(this.components);
@@ -49,15 +49,15 @@
             this.label.TabIndex = 0;
             this.label.Text = "您已连续120分钟没有休息了～";
             // 
-            // btnReset
+            // btnClose
             // 
-            this.btnReset.Location = new System.Drawing.Point(12, 69);
-            this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(112, 30);
-            this.btnReset.TabIndex = 1;
-            this.btnReset.Text = "我休息好啦～";
-            this.btnReset.UseVisualStyleBackColor = true;
-            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            this.btnClose.Location = new System.Drawing.Point(12, 69);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(112, 30);
+            this.btnClose.TabIndex = 1;
+            this.btnClose.Text = "我知道了啦～";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // btnMore
             // 
@@ -88,7 +88,7 @@
             this.ClientSize = new System.Drawing.Size(284, 111);
             this.ControlBox = false;
             this.Controls.Add(this.btnMore);
-            this.Controls.Add(this.btnReset);
+            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.label);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -106,7 +106,7 @@
         #endregion
 
         private System.Windows.Forms.Label label;
-        private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnMore;
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.Timer timer;
