@@ -57,36 +57,34 @@ namespace ZBreak
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            TryBreak();
-            var activeTime = DateTime.Now - _lastBreakTime;
-            this.notifyIcon.Text = "您已连续" + activeTime.TotalMinutes.ToString("N0") + "分钟没有休息了～";
-            if (activeTime > _remindSpan)
+            if (_checker.Check())
             {
-                ShowRemind(activeTime);
-            }
-        }
-
-        private void TryBreak()
-        {
-            if (_checker.Check() == false)
-            {
-                _continueBreakCount += 1;
-                if (_continueBreakCount >= MinBreakCount)
+                _continueBreakCount = 0;
+                var activeTime = DateTime.Now - _lastBreakTime;
+                this.notifyIcon.Text = "您已经" + activeTime.TotalMinutes.ToString("N0") + "分钟没有休息了。";
+                if (activeTime >= _remindSpan)
                 {
-                    _lastBreakTime = DateTime.Now;
-                    _remindSpan = TimeSpan.FromMinutes(BaseRemindMinutes);
-                    _continueBreakCount = 0;
+                    ShowRemind(activeTime);
                 }
             }
             else
             {
-                _continueBreakCount = 0;
+                _continueBreakCount += 1;
+                if (_continueBreakCount >= MinBreakCount)
+                {
+                    //判定为休息
+                    _lastBreakTime = DateTime.Now;
+                    _remindSpan = TimeSpan.FromMinutes(BaseRemindMinutes);
+                    _continueBreakCount = 0;
+                    this.Hide();
+                }
             }
         }
 
         private void ShowRemind(TimeSpan activeTime)
         {
-            this.label.Text = "您已连续" + activeTime.TotalMinutes.ToString("N0") + "分钟没有休息了～";
+            this.label.Text = "您已经" + activeTime.TotalMinutes.ToString("N0") + "分钟没有休息了，" +
+                              "请至少休息" + ((TimerInterval * MinBreakCount) / 60000) + "分钟！";
             this.ShowInTaskbar = true;
             this.WindowState = FormWindowState.Normal;
             this.Show();

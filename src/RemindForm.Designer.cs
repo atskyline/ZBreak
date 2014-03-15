@@ -43,11 +43,11 @@
             // label
             // 
             this.label.AutoSize = true;
-            this.label.Location = new System.Drawing.Point(52, 31);
+            this.label.Location = new System.Drawing.Point(12, 29);
             this.label.Name = "label";
-            this.label.Size = new System.Drawing.Size(169, 13);
+            this.label.Size = new System.Drawing.Size(253, 13);
             this.label.TabIndex = 0;
-            this.label.Text = "您已连续120分钟没有休息了～";
+            this.label.Text = "您已经60分钟没有休息了，请至少休息5分钟！";
             // 
             // btnClose
             // 
@@ -55,24 +55,24 @@
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(112, 30);
             this.btnClose.TabIndex = 1;
-            this.btnClose.Text = "我知道了啦～";
+            this.btnClose.Text = "我知道了啦！";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // btnMore
             // 
-            this.btnMore.Location = new System.Drawing.Point(160, 69);
+            this.btnMore.Location = new System.Drawing.Point(153, 69);
             this.btnMore.Name = "btnMore";
             this.btnMore.Size = new System.Drawing.Size(112, 30);
             this.btnMore.TabIndex = 2;
-            this.btnMore.Text = "我要再干10分钟！";
+            this.btnMore.Text = "让我再干10分钟！";
             this.btnMore.UseVisualStyleBackColor = true;
             this.btnMore.Click += new System.EventHandler(this.btnMore_Click);
             // 
             // notifyIcon
             // 
             this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
-            this.notifyIcon.Text = "ZBreak";
+            this.notifyIcon.Text = "您已经0分钟没有休息了。";
             this.notifyIcon.Visible = true;
             // 
             // timer

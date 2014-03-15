@@ -7,6 +7,7 @@ ZBreak
 
 # ChangeLog
 ## 1.0.1
+ - 将默认的Target Framework4.5改成2.0
  - 点击“再干十分钟”，的时间修改从点击按钮算起10分钟
  - 将基本工作时间由2个小时调整为1个小时
  - 引入最小休息时间概念，每次休息至少TimerInterval × MinBreakCount 毫秒（为了排除掉去上个厕所就被认为是休息的情况）
