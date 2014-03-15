@@ -6,12 +6,12 @@ namespace ZBreak
     public partial class RemindForm : Form
     {
         //活动状态监测间隔，单位毫秒
-        private const Int32 TimerInterval = 10*1000;
+        private const Int32 TimerInterval = 60*1000;
         //最少连续MinBreakCount次检测都为休息状态才认为是休息
         //即每次休息至少TimerInterval × MinBreakCount 毫秒
         private const Int32 MinBreakCount = 5;
         //第一次提示基本时间，单位分钟
-        private const double BaseRemindMinutes = 120;
+        private const double BaseRemindMinutes = 60;
         //每一次累加时间，单位分钟
         private const double MoreMinutes = 10;
 
@@ -74,7 +74,7 @@ namespace ZBreak
             }
 
             var activeTime = DateTime.Now - _lastBreakTime;
-            this.notifyIcon.Text = "您已连续" + activeTime.Minutes + "分钟没有休息了～";
+            this.notifyIcon.Text = "您已连续" + activeTime.TotalMinutes.ToString("N0") + "分钟没有休息了～";
 
             if (activeTime > _remindSpan)
             {
@@ -84,7 +84,7 @@ namespace ZBreak
 
         private void ShowRemind(TimeSpan activeTime)
         {
-            this.label.Text = "您已连续" + activeTime.Minutes + "分钟没有休息了～";
+            this.label.Text = "您已连续" + activeTime.TotalMinutes.ToString("N0") + "分钟没有休息了～";
             this.ShowInTaskbar = true;
             this.WindowState = FormWindowState.Normal;
             this.Show();
