@@ -55,6 +55,13 @@ namespace ZBreak
             this.Hide();
         }
 
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            _lastBreakTime = DateTime.Now;
+            _remindSpan = TimeSpan.FromMinutes(BaseRemindMinutes);
+            this.Hide();
+        }
+
         private void timer_Tick(object sender, EventArgs e)
         {
             if (_checker.Check())
