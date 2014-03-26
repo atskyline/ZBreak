@@ -47,6 +47,10 @@ namespace ZBreak
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Hide();
+            //在这里做一次Check，主要是为了做一次截屏
+            //使得下一周期的对比对象为用户点击关闭按钮后的而不是上一个周期的
+            //这样可以避免用户点击了关闭后，什么动作都没有，但是还会跳出1-2次提醒的行框
+            _checker.Check();
         }
 
         private void btnMore_Click(object sender, EventArgs e)
