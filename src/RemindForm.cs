@@ -87,6 +87,8 @@ namespace ZBreak
                     _lastBreakTime = DateTime.Now;
                     _remindSpan = TimeSpan.FromMinutes(BaseRemindMinutes);
                     _continueBreakCount = 0;
+
+                    this.notifyIcon.Text = "您已经0分钟没有休息了。";
                     this.Hide();
                 }
             }
