@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace ZBreak
@@ -32,7 +33,6 @@ namespace ZBreak
             InitializeComponent();
             InitNotifyIconMenu();
             this.timer.Interval = TimerInterval;
-            this.WindowState = FormWindowState.Minimized;
         }
 
         private void InitNotifyIconMenu()
@@ -104,5 +104,10 @@ namespace ZBreak
             System.Media.SystemSounds.Beep.Play();
         }
 
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            e.Cancel = true;
+            this.Hide();
+        }
     }
 }

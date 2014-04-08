@@ -95,9 +95,7 @@
             // RemindForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(279, 131);
-            this.ControlBox = false;
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.btnMore);
             this.Controls.Add(this.btnClose);
@@ -110,6 +108,7 @@
             this.ShowInTaskbar = false;
             this.Text = "ZBreak";
             this.TopMost = true;
+            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.ResumeLayout(false);
             this.PerformLayout();
 

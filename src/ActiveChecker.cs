@@ -9,7 +9,7 @@ namespace ZBreak
     {
         private const int CollectPixelCount = 1000;
         //两次采集的像素有超过一定百分比不同，则认为屏幕属于活动状态
-        private const double DecidePercent = 0.10;
+        private const double DecidePercent = 0.05;
 
         private Pixel[] _data;
         private Rectangle _resolution;
