@@ -13,7 +13,10 @@ namespace ZBreak
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new RemindForm());
+            Application.ApplicationExit += (s, e) => Config.Save();
+            Config.Read();
+            ActiveMonitor.Run();
+            Application.Run();
         }
     }
 }

@@ -7,9 +7,6 @@ namespace ZBreak
 {
     class ActiveChecker : IDisposable
     {
-        private const int CollectPixelCount = 1000;
-        //两次采集的像素有超过一定百分比不同，则认为屏幕属于活动状态
-        private const double DecidePercent = 0.05;
 
         private Pixel[] _data;
         private Rectangle _resolution;
@@ -17,7 +14,7 @@ namespace ZBreak
         public ActiveChecker()
         {
             _resolution = Screen.PrimaryScreen.Bounds;
-            _data = new Pixel[CollectPixelCount];
+            _data = new Pixel[Config.CollectPixelCount];
             InitData();
             _bitmap = new Bitmap(_resolution.Width, _resolution.Height);
         }
@@ -71,8 +68,8 @@ namespace ZBreak
                 }
                 _data[i].Color = newColor;
             }
-            Debug.WriteLine(((Double)changePixelCount / CollectPixelCount) * 100 + "%");
-            return ((Double)changePixelCount / CollectPixelCount) > DecidePercent;
+            Debug.WriteLine(((Double)changePixelCount / Config.CollectPixelCount) * 100 + "%");
+            return ((Double)changePixelCount / Config.CollectPixelCount) > Config.DecidePercent;
         }
 
         public void Dispose()

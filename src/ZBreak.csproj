@@ -9,9 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ZBreak</RootNamespace>
     <AssemblyName>ZBreak</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -49,6 +49,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActiveChecker.cs" />
+    <Compile Include="ActiveMonitor.cs" />
+    <Compile Include="Config.cs" />
+    <Compile Include="IniFile.cs" />
     <Compile Include="RemindForm.cs">
       <SubType>Form</SubType>
     </Compile>

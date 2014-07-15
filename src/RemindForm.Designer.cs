@@ -13,8 +13,6 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            //手动资源释放
-            _checker.Dispose();
 
             if (disposing && (components != null))
             {
@@ -34,41 +32,28 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RemindForm));
             this.label = new System.Windows.Forms.Label();
-            this.btnClose = new System.Windows.Forms.Button();
-            this.btnMore = new System.Windows.Forms.Button();
+            this.btnDelay = new System.Windows.Forms.Button();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.timer = new System.Windows.Forms.Timer(this.components);
             this.btnReset = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label
             // 
-            this.label.AutoSize = true;
-            this.label.Location = new System.Drawing.Point(9, 23);
+            this.label.Location = new System.Drawing.Point(10, 10);
             this.label.Name = "label";
-            this.label.Size = new System.Drawing.Size(253, 13);
+            this.label.Size = new System.Drawing.Size(260, 20);
             this.label.TabIndex = 0;
             this.label.Text = "您已经60分钟没有休息了，请至少休息5分钟！";
             // 
-            // btnClose
+            // btnDelay
             // 
-            this.btnClose.Location = new System.Drawing.Point(12, 52);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(114, 30);
-            this.btnClose.TabIndex = 1;
-            this.btnClose.Text = "我知道了啦！";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // btnMore
-            // 
-            this.btnMore.Location = new System.Drawing.Point(148, 52);
-            this.btnMore.Name = "btnMore";
-            this.btnMore.Size = new System.Drawing.Size(114, 30);
-            this.btnMore.TabIndex = 2;
-            this.btnMore.Text = "让我再干10分钟！";
-            this.btnMore.UseVisualStyleBackColor = true;
-            this.btnMore.Click += new System.EventHandler(this.btnMore_Click);
+            this.btnDelay.Location = new System.Drawing.Point(10, 32);
+            this.btnDelay.Name = "btnDelay";
+            this.btnDelay.Size = new System.Drawing.Size(260, 30);
+            this.btnDelay.TabIndex = 2;
+            this.btnDelay.Text = "让我再干" + Config.MoreTime + "分钟！";
+            this.btnDelay.UseVisualStyleBackColor = true;
+            this.btnDelay.Click += new System.EventHandler(this.btnDelay_Click);
             // 
             // notifyIcon
             // 
@@ -76,17 +61,11 @@
             this.notifyIcon.Text = "您已经0分钟没有休息了。";
             this.notifyIcon.Visible = true;
             // 
-            // timer
-            // 
-            this.timer.Enabled = true;
-            this.timer.Interval = 30000;
-            this.timer.Tick += new System.EventHandler(this.timer_Tick);
-            // 
             // btnReset
             // 
-            this.btnReset.Location = new System.Drawing.Point(12, 88);
+            this.btnReset.Location = new System.Drawing.Point(10, 70);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(250, 30);
+            this.btnReset.Size = new System.Drawing.Size(260, 30);
             this.btnReset.TabIndex = 3;
             this.btnReset.Text = "我休息好了，马上给我重置计时器！";
             this.btnReset.UseVisualStyleBackColor = true;
@@ -94,33 +73,28 @@
             // 
             // RemindForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(279, 131);
+            this.ClientSize = new System.Drawing.Size(284, 111);
             this.Controls.Add(this.btnReset);
-            this.Controls.Add(this.btnMore);
-            this.Controls.Add(this.btnClose);
+            this.Controls.Add(this.btnDelay);
             this.Controls.Add(this.label);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(295, 170);
-            this.MinimumSize = new System.Drawing.Size(295, 170);
+            this.MaximumSize = new System.Drawing.Size(300, 150);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(300, 150);
             this.Name = "RemindForm";
-            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ZBreak";
             this.TopMost = true;
-            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Label label;
-        private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.Button btnMore;
+        private System.Windows.Forms.Button btnDelay;
         private System.Windows.Forms.NotifyIcon notifyIcon;
-        private System.Windows.Forms.Timer timer;
         private System.Windows.Forms.Button btnReset;
     }
 }

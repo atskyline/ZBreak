@@ -6,33 +6,14 @@ namespace ZBreak
 {
     public partial class RemindForm : Form
     {
-        //活动状态监测间隔，单位毫秒
-        private const Int32 TimerInterval = 60*1000;
-        //最少连续MinBreakCount次检测都为休息状态才认为是休息
-        //即每次休息至少TimerInterval × MinBreakCount 毫秒
-        //当TimerInterval = 60*1000时，MinBreakCount的值相当于至少休息分钟
-        //默认为5即至少休息了5分钟才认定是一次休息
-        private const Int32 MinBreakCount = 5;
-        //第一次提示基本时间，单位分钟
-        private const double BaseRemindMinutes = 60;
-        //每一次累加时间，单位分钟
-        private const double MoreMinutes = 10;
 
-        private readonly ActiveChecker _checker;
-        private TimeSpan _remindSpan;
-        private DateTime _lastBreakTime;
-        private Int32 _continueBreakCount;
+        private readonly ActiveMonitor _monitor;
 
-        public RemindForm()
+        public RemindForm(ActiveMonitor monitor)
         {
-            _checker = new ActiveChecker();
-            _remindSpan = TimeSpan.FromMinutes(BaseRemindMinutes);
-            _lastBreakTime = DateTime.Now;
-            _continueBreakCount = 0;
-
             InitializeComponent();
             InitNotifyIconMenu();
-            this.timer.Interval = TimerInterval;
+            _monitor = monitor;
         }
 
         private void InitNotifyIconMenu()
@@ -44,64 +25,16 @@ namespace ZBreak
             notifyIcon.ContextMenu = contextMenu;
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
+        private void btnDelay_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            //在这里做一次Check，主要是为了做一次截屏
-            //使得下一周期的对比对象为用户点击关闭按钮后的而不是上一个周期的
-            //这样可以避免用户点击了关闭后，什么动作都没有，但是还会跳出1-2次提醒的行框
-            _checker.Check();
-        }
-
-        private void btnMore_Click(object sender, EventArgs e)
-        {
-            _remindSpan = DateTime.Now - _lastBreakTime + TimeSpan.FromMinutes(MoreMinutes);
-            this.Hide();
+            _monitor.Delay();
+            this.Close();
         }
 
         private void btnReset_Click(object sender, EventArgs e)
         {
-            _lastBreakTime = DateTime.Now;
-            _remindSpan = TimeSpan.FromMinutes(BaseRemindMinutes);
-            this.Hide();
-        }
-
-        private void timer_Tick(object sender, EventArgs e)
-        {
-            if (_checker.Check())
-            {
-                _continueBreakCount = 0;
-                var activeTime = DateTime.Now - _lastBreakTime;
-                this.notifyIcon.Text = "您已经" + activeTime.TotalMinutes.ToString("N0") + "分钟没有休息了。";
-                if (activeTime >= _remindSpan)
-                {
-                    ShowRemind(activeTime);
-                }
-            }
-            else
-            {
-                _continueBreakCount += 1;
-                if (_continueBreakCount >= MinBreakCount)
-                {
-                    //判定为休息
-                    _lastBreakTime = DateTime.Now;
-                    _remindSpan = TimeSpan.FromMinutes(BaseRemindMinutes);
-                    _continueBreakCount = 0;
-
-                    this.notifyIcon.Text = "您已经0分钟没有休息了。";
-                    this.Hide();
-                }
-            }
-        }
-
-        private void ShowRemind(TimeSpan activeTime)
-        {
-            this.label.Text = "您已经" + activeTime.TotalMinutes.ToString("N0") + "分钟没有休息了，" +
-                              "请至少休息" + ((TimerInterval * MinBreakCount) / 60000) + "分钟！";
-            this.ShowInTaskbar = true;
-            this.WindowState = FormWindowState.Normal;
-            this.Show();
-            System.Media.SystemSounds.Beep.Play();
+            _monitor.Reset();
+            this.Close();
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -109,5 +42,12 @@ namespace ZBreak
             e.Cancel = true;
             this.Hide();
         }
+
+        public void Update(Int32 activeTime)
+        {
+            this.label.Text = "您已经" + activeTime + "分钟没有休息了，请至少休息" + Config.MinBreakTime + "分钟！";
+            this.notifyIcon.Text = "您已经" + activeTime + "分钟没有休息了。";
+        }
+
     }
 }
