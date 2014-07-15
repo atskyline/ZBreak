@@ -6,7 +6,7 @@ ZBreak
 # TODO
 
 # ChangeLog
-## 1.0.3
+## 1.1.0
  - 重构了窗体部分代码
  - 将Target Framework改成3.5 client profile
  - 添加了配置文件
